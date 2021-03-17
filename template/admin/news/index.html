@@ -1,0 +1,93 @@
+{{ define "index/index.html" }}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta content="text/html;charset=UTF-8"/>
+  <title>JManage</title>
+  <meta name="keywords" content="JManage" />
+  <meta name="description" content="JManage" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta http-equiv ="Pragma" content = "no-cache"/>
+  <meta http-equiv="Cache-Control" content="no cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="format-detection" content="telephone=no"/>
+  <script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+  <link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/static/lib/fsLayuiPlugin/plugins/layui/css/layui.css" media="all"/>
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script type="text/javascript" src="/static/lib/fsLayuiPlugin/plugins/jquery/jquery.min.js"></script>
+  <link href="/static/lib/fsLayuiPlugin/plugins/contextMenu/jquery.contextMenu.min.css" rel="stylesheet">
+  <script src="/static/lib/fsLayuiPlugin/plugins/contextMenu/jquery.contextMenu.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/lib/fsLayuiPlugin/css/fs.css?v=1.6.4" media="all"/>
+  <script type="text/javascript" src="/static/lib/fsLayuiPlugin/plugins/layui/layui.js"></script>
+  <script type="text/javascript" src="/static/lib/fsLayuiPlugin/plugins/frame/js/fsDict.js?v=1.6.4"></script>
+  <script type="text/javascript" src="/static/lib/fsLayuiPlugin/plugins/frame/js/fs.js?v=1.6.4"></script>
+  <script type="text/javascript" src="/static/lib/fsLayuiPlugin/plugins/frame/js/main.js?v=1.6.4"></script>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+  <!-- 顶部 -->
+  <div class="layui-header">
+    <a href="" class="layui-hide-xs"><div class="layui-logo">JManage</div></a>
+    <a href="javascript:;" class="layui-hide-xs"><div class="fsSwitchMenu"><i class="fa fa-outdent"></i></div></a>
+
+    <!-- 顶部菜单 -->
+    <ul class="layui-nav layui-layout-left fsTopMenu" id="fsTopMenu" lay-filter="fsTopMenu">
+    </ul>
+
+    <ul class="layui-nav layui-layout-right" id="fsRightMenu" lay-filter="fsRightMenu">
+      <li class="layui-nav-item layui-hide-xs">
+        <a href="javascript:;">
+          <img src="https://q.qlogo.cn/qqapp/101235792/5F344D27449D79D64FE873AF8E907139/100" class="layui-nav-img">
+          <!--{$loginUserInfo.name_en|default:''}-->
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;" dataUrl="/home/account/edit">基本资料</a></dd>
+          <!--{if $loginUserInfo.role_id eq '1'}-->
+          <dd><a href="javascript:;" dataUrl="/home/account/index">用户管理</a></dd>
+          <!--{/if}-->
+        </dl>
+      </li>
+      <li class="layui-nav-item layui-hide-xs"><a href="/index/index/logout"><i class="fa fa-sign-out"></i> 退出</a></li>
+    </ul>
+  </div>
+
+  <!-- 左边菜单 -->
+  <div class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree fsLeftMenu"  lay-filter="fsLeftMenu" id="fsLeftMenu">
+      </ul>
+    </div>
+  </div>
+
+  <!-- 右边内容区域 -->
+  <div class="layui-body layui-form">
+    <div class="layui-tab layui-tab-card fsTab" lay-filter="fsTab" lay-allowClose="true">
+      <!-- 菜单导航 -->
+      <ul class="layui-tab-title" id="fsTabMenu">
+        <li class="layui-this" lay-id="28"><i class="layui-icon">&#xe68e;</i><cite>后台首页</cite><p class="layui-tab-close" style="display: none;"></p></li>
+      </ul>
+      <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show" lay-id="1">
+          <iframe src="/home/index/main.html"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 移动导航 -->
+<div class="site-tree-mobile layui-hide">
+  <i class="layui-icon">&#xe602;</i>
+</div>
+<div class="site-mobile-shade"></div>
+</body>
+</html>
+{{end}}
