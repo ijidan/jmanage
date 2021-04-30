@@ -1,0 +1,9 @@
+{{ define "layout/content.html" }}
+	<link rel="stylesheet" href="/static/layui/css/layui.css">
+    {{block "header_css".}}{{end}}
+	<script src="/static/layui/layui.js"></script>
+    {{block "header_js".}}{{end}}
+    {{ block "content".}}{{end}}
+    {{block  "footer_css".}}{{end}}
+    {{block "footer_js".}}{{end}}
+{{ end }}

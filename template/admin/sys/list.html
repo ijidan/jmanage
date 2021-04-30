@@ -1,0 +1,39 @@
+{{define "sys/list.html"}}
+    {{template "layout/content.html" .}}
+{{end}}
+
+{{define "content"}}
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+		<legend>CPU个数</legend>
+	</fieldset>
+	<table class="layui-table">
+		<tbody>
+		<tr>
+			<td>CPU个数</td>
+			<td>{{.cpuNum}}</td>
+		</tr>
+		</tbody>
+	</table>
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+		<legend>CPU信息</legend>
+	</fieldset>
+	<table class="layui-table">
+        {{.cpuInfo|LoopSliceToTr|Unescaped}}
+	</table>
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+		<legend>HOST信息</legend>
+	</fieldset>
+	<table class="layui-table">
+		<tbody>
+            {{.hostInfo|LoopToTr|Unescaped}}
+		</tbody>
+	</table>
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+		<legend>Docker信息</legend>
+	</fieldset>
+	<table class="layui-table">
+		<tbody>
+        {{.dockerStat|LoopToTr|Unescaped}}
+		</tbody>
+	</table>
+{{end}}

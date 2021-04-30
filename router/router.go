@@ -2,8 +2,10 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/ijidan/jmanage/controller"
 	"github.com/ijidan/jmanage/controller/admin"
 	"github.com/ijidan/jmanage/controller/www"
+	"html/template"
 	"net/http"
 	"time"
 )
@@ -24,20 +26,24 @@ func AdminRegister(r *gin.Engine) {
 	redis := admin.RedisController{}
 	user := admin.UserController{}
 	doc := admin.DocController{}
-	news:=admin.NewsController{}
+	news := admin.NewsController{}
+	sys := admin.SysController{}
 
-	r.GET("/", index.Index)
-	r.GET("/menu/getMenu", menu.GetMenu)
-	r.GET("/r", redis.GetDb)
+	r.Any("/", index.Index)
+	r.Any("/menu/getMenu", menu.GetMenu)
+	r.Any("/r", redis.GetDb)
 	//用户相关
 	r.Any("/user/reg", user.Reg)
 	r.Any("/user/login", user.Login)
 	//资讯相关
-	r.GET("/news/getList",news.GetList)
-	r.POST("news/edit",news.Edit)
+	r.Any("/news/list", news.List)
+	r.Any("/news/getList", news.GetList)
+	r.Any("news/edit", news.Edit)
+	//系统相关
+	r.Any("/sys/list", sys.List)
 	//文件相关
-	r.POST("/doc/upload", doc.Upload)
-	r.POST("/doc/multiUpload", doc.MultiUpload)
+	r.Any("/doc/upload", doc.Upload)
+	r.Any("/doc/multiUpload", doc.MultiUpload)
 }
 
 //前台服务
@@ -60,9 +66,16 @@ func WWWServer() *http.Server {
 //后台服务
 func AdminServer() *http.Server {
 	r := gin.Default()
-	r.Use(gin.Recovery())
+	r.SetFuncMap(template.FuncMap{
+		"LoopToTr":      controller.LoopToTr,
+		"LoopSliceToTr": controller.LoopSliceToTr,
+		"Unescaped":     controller.Unescaped,
+		"UcFirst":       controller.UcFirst,
+		"LcFirst":       controller.LcFirst,
+	})
+	r.Use(RecoveryHandler())
 	r.Use(GoroutineTest())
-	r.Use(TimeStat())
+	r.Use(LogRecord())
 	r.LoadHTMLGlob("template/admin/**/*")
 	r.StaticFS("/static", http.Dir("static"))
 	//记录日志

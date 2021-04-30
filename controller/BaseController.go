@@ -10,9 +10,12 @@ import (
 	"github.com/go-playground/validator/v10"
 	enTrans "github.com/go-playground/validator/v10/translations/en"
 	zhTrans "github.com/go-playground/validator/v10/translations/zh"
+	"github.com/gogf/gf/util/gconv"
 	"github.com/ijidan/jmanage/pkg"
+	"html/template"
 	"net/http"
 	"strconv"
+	"unicode"
 )
 
 //基础控制器
@@ -139,6 +142,18 @@ func (c *BaseController) JsonFail(context *gin.Context, code uint, message strin
 	context.JSON(http.StatusOK, result)
 }
 
+//成功JSON响应2
+func (c *BaseController) JsonSuccess2(context *gin.Context, message string, count uint, data interface{}, jumpUrl string) {
+	result := c.buildResponseResult2(context, 0, message, count, data, jumpUrl)
+	context.JSON(http.StatusOK, result)
+}
+
+//失败JSON响应2
+func (c *BaseController) JsonFail2(context *gin.Context, code uint, message string, count uint, data interface{}, jumpUrl string) {
+	result := c.buildResponseResult2(context, code, message, count, data, jumpUrl)
+	context.JSON(http.StatusOK, result)
+}
+
 //原始JSON
 func (c *BaseController) JsonRaw(context *gin.Context, data string) {
 	context.JSON(http.StatusOK, data)
@@ -218,4 +233,65 @@ func (c *BaseController) buildResponseResult(context *gin.Context, code uint, me
 		"jumpUrl": jumpUrl,
 	}
 	return result
+}
+
+//构造响应结果2
+func (c *BaseController) buildResponseResult2(context *gin.Context, code uint, message string, count uint, data interface{}, jumpUrl string) map[string]interface{} {
+	result := gin.H{
+		"code":    code,
+		"msg":     message,
+		"jumpUrl": jumpUrl,
+		"count":   count,
+		"data":    data,
+	}
+	return result
+}
+
+//slice 转TR
+func LoopSliceToTr(s []interface{}) string {
+	var str string
+	for _, v := range s {
+		s := LoopToTr(v)
+		item := fmt.Sprintf(`<table class="layui-table"><tbody>%s</tbody></table>`, s)
+		str = str + item
+	}
+	if str == "" {
+		str = fmt.Sprintf(`<table class="layui-table"><tbody><tr><td>暂无相关信息</td></tr></tbody></table>`)
+	}
+	return str
+}
+
+//转TR
+func LoopToTr(v interface{}) string {
+	var str string
+	m := gconv.Map(v)
+	for k, v := range m {
+		item := fmt.Sprintf("<tr><td>%s</td><td>%s</td></tr>", UcFirst(k), gconv.String(v))
+		str = str + item
+	}
+	if str == "" {
+		str = fmt.Sprintf(`<tr><td>暂无相关信息</td></tr>`)
+	}
+	return str
+}
+
+//不转义
+func Unescaped(x string) interface{} {
+	return template.HTML(x)
+}
+
+//首字母大写
+func UcFirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToUpper(v)) + str[i+1:]
+	}
+	return ""
+}
+
+//首字母小写
+func LcFirst(str string) string {
+	for i, v := range str {
+		return string(unicode.ToLower(v)) + str[i+1:]
+	}
+	return ""
 }

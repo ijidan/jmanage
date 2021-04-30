@@ -8,6 +8,10 @@ import (
 
 //入口函数
 func main() {
+	//db:=jutil.NewDbPartner()
+	//var newsList []model.TNews
+	//db.Raw("select * from t_news").Scan(&newsList)
+	//log.Println(db)
 	var g errgroup.Group
 	//前台服务
 	//g.Go(func() error {
@@ -16,7 +20,7 @@ func main() {
 	//})
 	//后台服务
 	g.Go(func() error {
-		server:=router.AdminServer()
+		server := router.AdminServer()
 		return server.ListenAndServe()
 	})
 	if err := g.Wait(); err != nil {

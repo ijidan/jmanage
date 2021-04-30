@@ -1,0 +1,38 @@
+{{define "news/list.html"}}
+    {{template "layout/content.html" .}}
+{{end}}
+
+
+{{define "content"}}
+	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+		<legend>资讯列表</legend>
+	</fieldset>
+	<table id="list" lay-filter="list"></table>
+{{end}}
+
+{{define "footer_js"}}
+	<script type="text/javascript">
+		layui.use('table', function () {
+			var table = layui.table;
+			//第一个实例
+			table.render({
+				elem: '#list'
+				, url: '/news/getList' //数据接口
+				, page: true //开启分页
+				, cols: [[ //表头
+					{field: 'f_id', title: 'ID'}
+					, {field: 'f_thumbnail', title: '缩略图',templet: function (d) {
+						var imgUrl=d.f_thumbnail;
+						return '<img src="'+imgUrl+'" width="120" height="120" />';
+						}}
+					, {field: 'f_title', title: '标题'}
+					, {field: 'f_abstract', title: '简介'}
+					, {field: 'f_tag', title: '标签'}
+					, {field: 'f_view', title: '浏览量'}
+					, {field: 'f_create_time', title: '创建时间'}
+				]]
+			});
+
+		});
+	</script>
+{{end}}
