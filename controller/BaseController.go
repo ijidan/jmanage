@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/locales/en"
@@ -13,8 +14,12 @@ import (
 	"github.com/gogf/gf/util/gconv"
 	"github.com/ijidan/jmanage/pkg"
 	"html/template"
+	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
+	"strings"
 	"unicode"
 )
 
@@ -245,6 +250,51 @@ func (c *BaseController) buildResponseResult2(context *gin.Context, code uint, m
 		"data":    data,
 	}
 	return result
+}
+
+//自定义函数
+func GenFunMap() template.FuncMap {
+	return template.FuncMap{
+		"LoopToTr":      LoopToTr,
+		"LoopSliceToTr": LoopSliceToTr,
+		"Unescaped":     Unescaped,
+		"UcFirst":       UcFirst,
+		"LcFirst":       LcFirst,
+	}
+}
+
+//加载模板
+func LoadTemplates(module string) multitemplate.Renderer {
+	dir, _ := os.Getwd()
+	pathSep := string(os.PathSeparator)
+	templateDir := dir + pathSep + "template"
+	moduleDir := templateDir + pathSep + module
+	r := multitemplate.NewRenderer()
+	layouts, err := filepath.Glob(moduleDir + "/layout/*.html")
+	if err != nil {
+		panic(err.Error())
+	}
+	includes, err := filepath.Glob(moduleDir + "/**/*.html")
+	if err != nil {
+		panic(err.Error())
+	}
+	// Generate our templates map from our layouts/ and includes/ directories
+	for _, include := range includes {
+		if find := strings.Contains(include, moduleDir+pathSep+"layout"); find {
+			continue
+		}
+		layoutCopy := make([]string, len(layouts))
+		copy(layoutCopy, layouts)
+		files := append(layoutCopy, include)
+		includeList := strings.Split(include, pathSep)
+		includeListCnt := len(includeList)
+		includePath := fmt.Sprintf("%s/%s", includeList[includeListCnt-2], includeList[includeListCnt-1])
+
+		log.Println(includeList)
+		log.Println(includePath)
+		r.AddFromFilesFuncs(includePath, GenFunMap(), files...)
+	}
+	return r
 }
 
 //slice 转TR

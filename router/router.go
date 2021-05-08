@@ -5,7 +5,6 @@ import (
 	"github.com/ijidan/jmanage/controller"
 	"github.com/ijidan/jmanage/controller/admin"
 	"github.com/ijidan/jmanage/controller/www"
-	"html/template"
 	"net/http"
 	"time"
 )
@@ -66,18 +65,14 @@ func WWWServer() *http.Server {
 //后台服务
 func AdminServer() *http.Server {
 	r := gin.Default()
-	r.SetFuncMap(template.FuncMap{
-		"LoopToTr":      controller.LoopToTr,
-		"LoopSliceToTr": controller.LoopSliceToTr,
-		"Unescaped":     controller.Unescaped,
-		"UcFirst":       controller.UcFirst,
-		"LcFirst":       controller.LcFirst,
-	})
+	r.HTMLRender = controller.LoadTemplates("admin")
+	//r.LoadHTMLGlob("template/admin/**/*")
+	//r.SetFuncMap(controller.GenFunMap())
+	r.StaticFS("/static", http.Dir("static"))
 	r.Use(RecoveryHandler())
 	r.Use(GoroutineTest())
 	r.Use(LogRecord())
-	r.LoadHTMLGlob("template/admin/**/*")
-	r.StaticFS("/static", http.Dir("static"))
+
 	//记录日志
 	//f,_:=os.Create("runtime/j_manage.log")
 	//gin.DefaultWriter=io.MultiWriter(f)

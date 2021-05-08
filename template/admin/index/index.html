@@ -1,14 +1,8 @@
-{{ define "layout/main.html" }}
-	<!DOCTYPE html>
-	<html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport"
-		      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<title>JManage</title>
-		<link rel="stylesheet" href="/static/layui/css/layui.css">
-	</head>
+{{define "index/index.html"}}
+    {{template "layout/content.html" .}}
+{{end}}
+
+{{define "content"}}
 	<body class="layui-layout-body">
 	<div class="layui-layout layui-layout-admin">
 		<div class="layui-header">
@@ -79,7 +73,11 @@
 			© JManage
 		</div>
 	</div>
-	<script src="/static/layui/layui.js"></script>
+	</body>
+
+{{end}}
+
+{{define "footer_js"}}
 	<script type="text/javascript">
 		layui.use(['element', 'layer', 'jquery'], function () {
 			var element = layui.element;
@@ -137,9 +135,4 @@
 			}
 		});
 	</script>
-	<script>
-		<!--这里是放置js代码区域-->
-	</script>
-	</body>
-	</html>
-{{ end }}
+{{end}}

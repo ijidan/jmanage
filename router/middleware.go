@@ -86,11 +86,18 @@ func RecoveryHandler() gin.HandlerFunc {
 		defer func() {
 			if r = recover(); r != nil {
 				var message string
-				if reflect.TypeOf(r).String() == "*errors.errorString" {
+				var rType string
+				rType = reflect.TypeOf(r).String()
+
+				switch rType {
+				case "*errors.errorString":
+				case "*template.Error":
 					message = r.(error).Error()
-				} else {
+					break
+				default:
 					message = r.(string)
 				}
+
 				//堆栈
 				DebugStack := ""
 				for _, v := range strings.Split(string(debug.Stack()), "\n") {

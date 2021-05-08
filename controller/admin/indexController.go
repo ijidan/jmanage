@@ -12,7 +12,7 @@ type IndexController struct {
 
 //首页
 func (c *IndexController) Index(context *gin.Context) {
-	context.HTML(http.StatusOK, "layout/main.html", nil)
+	context.HTML(http.StatusOK, "index/index.html", nil)
 }
 
 //Ping
