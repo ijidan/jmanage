@@ -20,15 +20,22 @@
 				, page: true //开启分页
 				, cols: [[ //表头
 					{field: 'f_id', title: 'ID'}
-					, {field: 'f_thumbnail', title: '缩略图',templet: function (d) {
-						var imgUrl=d.f_thumbnail;
-						return '<img src="'+imgUrl+'" width="120" height="120" />';
-						}}
+					, {
+						field: 'f_thumbnail', title: '缩略图', templet: function (d) {
+							var imgUrl = d.f_thumbnail;
+							return '<img src="' + imgUrl + '" width="120" height="120" />';
+						}
+					}
 					, {field: 'f_title', title: '标题'}
 					, {field: 'f_abstract', title: '简介'}
 					, {field: 'f_tag', title: '标签'}
 					, {field: 'f_view', title: '浏览量'}
-					, {field: 'f_create_time', title: '创建时间'}
+					, {
+						field: 'f_create_time', title: '创建时间', templet: function (d) {
+							var createTime = d.f_create_time;
+							return createTime > 0 ? moment(createTime).format('YYYY-M-D HH:mm:ss') : '';
+						}
+					}
 				]]
 			});
 

@@ -66,8 +66,6 @@ func WWWServer() *http.Server {
 func AdminServer() *http.Server {
 	r := gin.Default()
 	r.HTMLRender = controller.LoadTemplates("admin")
-	//r.LoadHTMLGlob("template/admin/**/*")
-	//r.SetFuncMap(controller.GenFunMap())
 	r.StaticFS("/static", http.Dir("static"))
 	r.Use(RecoveryHandler())
 	r.Use(GoroutineTest())
