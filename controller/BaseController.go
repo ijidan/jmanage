@@ -175,7 +175,6 @@ func (c *BaseController) JsonP(context *gin.Context, code uint, message string, 
 		}
 		context.JSONP(http.StatusOK, result)
 	}
-
 }
 
 //成功iframe响应

@@ -47,6 +47,7 @@ func AdminRegister(r *gin.Engine) {
 
 //前台服务
 func WWWServer() *http.Server {
+	gin.ForceConsoleColor()
 	r := gin.Default()
 	r.Use(gin.Recovery())
 	r.LoadHTMLGlob("template/www/**/*")
@@ -64,6 +65,7 @@ func WWWServer() *http.Server {
 
 //后台服务
 func AdminServer() *http.Server {
+	gin.ForceConsoleColor()
 	r := gin.Default()
 	r.HTMLRender = controller.LoadTemplates("admin")
 	r.StaticFS("/static", http.Dir("static"))

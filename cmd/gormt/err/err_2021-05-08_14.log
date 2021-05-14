@@ -1,0 +1,35 @@
+=========================2021-05-08 14:41:20 ========================= 
+Got error when connect database:hnb:alyHnb2015@tcp(172.16.10.111:3306)/d_manage?charset=utf8&parseTime=True&loc=Local&interpolateParams=True: Error 1049: Unknown database 'd_manage'
+goroutine 1 [running]:
+runtime/debug.Stack(0xc00009e240, 0xc0000b4600, 0xb7)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa5
+github.com/xxjwxc/public/mylog.(*errDeal).SaveError(0xc000004820, 0xc0000b4480, 0xb5, 0x6522ca, 0x3)
+	/Users/xxj/work/path/pkg/mod/github.com/xxjwxc/public@v0.0.0-20200928160257-3db1045537d1/mylog/common.go:38 +0x3aa
+github.com/xxjwxc/public/mylog.(*stdLog).Error(0xc000004820, 0xc000096880, 0x1, 0x1)
+	/Users/xxj/work/path/pkg/mod/github.com/xxjwxc/public@v0.0.0-20200928160257-3db1045537d1/mylog/std.go:38 +0x17f
+github.com/xxjwxc/public/mylog.Error(...)
+	/Users/xxj/work/path/pkg/mod/github.com/xxjwxc/public@v0.0.0-20200928160257-3db1045537d1/mylog/mylog.go:45
+github.com/xxjwxc/public/mysqldb.(*MySqlDB).OnGetDBOrm(0xc00039fad0, 0xc0000900e0, 0x6c, 0x28a921acd98)
+	/Users/xxj/work/path/pkg/mod/github.com/xxjwxc/public@v0.0.0-20200928160257-3db1045537d1/mysqldb/mysqldb.go:37 +0x313
+github.com/xxjwxc/public/mysqldb.OnInitDBOrm(...)
+	/Users/xxj/work/path/pkg/mod/github.com/xxjwxc/public@v0.0.0-20200928160257-3db1045537d1/mysqldb/mysqldb.go:25
+github.com/xxjwxc/gormt/data/view/model/genmysql.(*mysqlModel).GenModel(0xb20220, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0)
+	/Users/xxj/work/workspace/github/xxjwxc/gormt/data/view/model/genmysql/genmysql.go:22 +0xa7
+github.com/xxjwxc/gormt/data/view/gtools.showCmd()
+	/Users/xxj/work/workspace/github/xxjwxc/gormt/data/view/gtools/gtools.go:45 +0xd3
+github.com/xxjwxc/gormt/data/view/gtools.Execute()
+	/Users/xxj/work/workspace/github/xxjwxc/gormt/data/view/gtools/gtools.go:24 +0x3e
+github.com/xxjwxc/gormt/data/cmd.glob..func1(0xac3f20, 0xc0003a4190, 0x0, 0x1)
+	/Users/xxj/work/workspace/github/xxjwxc/gormt/data/cmd/cmd.go:22 +0x27
+github.com/spf13/cobra.(*Command).execute(0xac3f20, 0xc000004470, 0x1, 0x1, 0xac3f20, 0xc000004470)
+	/Users/xxj/work/path/pkg/mod/github.com/spf13/cobra@v1.0.0/command.go:846 +0x2c2
+github.com/spf13/cobra.(*Command).ExecuteC(0xac3f20, 0x0, 0x0, 0x0)
+	/Users/xxj/work/path/pkg/mod/github.com/spf13/cobra@v1.0.0/command.go:950 +0x375
+github.com/spf13/cobra.(*Command).Execute(...)
+	/Users/xxj/work/path/pkg/mod/github.com/spf13/cobra@v1.0.0/command.go:887
+github.com/xxjwxc/gormt/data/cmd.Execute()
+	/Users/xxj/work/workspace/github/xxjwxc/gormt/data/cmd/cmd.go:30 +0x34
+main.main()
+	/Users/xxj/work/workspace/github/xxjwxc/gormt/main.go:6 +0x27
+
+=========================end=========================

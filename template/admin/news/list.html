@@ -15,13 +15,7 @@
 				, url: '/news/getList' //数据接口
 				, page: true //开启分页
 				, cols: [[ //表头
-					{field: 'f_id', title: 'ID'}
-					, {
-						field: 'f_thumbnail', title: '缩略图', templet: function (d) {
-							var imgUrl = d.f_thumbnail;
-							return '<img src="' + imgUrl + '" width="120" height="120" />';
-						}
-					}
+					{field: 'f_id', title: 'ID',width:80}
 					, {field: 'f_title', title: '标题'}
 					, {field: 'f_abstract', title: '简介'}
 					, {field: 'f_tag', title: '标签'}
